@@ -10,19 +10,21 @@
 ```
 spendesk-reviews/
 ├── scraper/
-│   └── live_scraper.py    # Playwright + Chrome CDP → contourne Cloudflare
-├── dashboard/             # Next.js 14 + Chart.js + Tailwind
+│   └── live_scraper.py        # Playwright + Chrome CDP → contourne Cloudflare
+├── dashboard/                 # Next.js 14 + Chart.js + Tailwind
 │   ├── data/
-│   │   └── reviews.json   # 225 avis (scrapés)
+│   │   └── reviews.json       # 225 avis (scrapés)
 │   ├── src/
 │   │   ├── app/
-│   │   │   ├── page.tsx           # Page dashboard
-│   │   │   └── api/reviews/route.ts  # Route API → sert reviews.json
+│   │   │   ├── page.tsx               # Page dashboard
+│   │   │   └── api/reviews/route.ts   # Route API → sert reviews.json
 │   │   ├── components/
-│   │   │   └── Dashboard.tsx      # Graphiques + KPIs
+│   │   │   └── Dashboard.tsx          # Graphiques + KPIs
 │   │   └── lib/
-│   │       └── data.ts            # Types + calculs métriques
+│   │       └── data.ts                # Types + calculs métriques
 │   └── package.json
+├── handoffs/                  # Itérations et décisions du projet
+│   └── _index.md
 └── README.md
 ```
 
