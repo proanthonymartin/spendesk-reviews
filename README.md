@@ -114,9 +114,10 @@ npm run dev   # → http://localhost:3000
 
 ## Prochaines étapes
 
+- Pagination de la liste d'avis
+- Mode sombre
 - Scraping planifié (GitHub Actions cron)
 - Comparaison concurrents (PayFit, Factorial…)
-- Recherche / filtre des avis par mot-clé, note, date
 - Nuage de mots des avis/contre
 - Analyse de sentiment
 - PostgreSQL pour données multi-utilisateurs / dynamiques

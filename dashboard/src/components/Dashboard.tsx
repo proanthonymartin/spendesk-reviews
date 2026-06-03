@@ -53,6 +53,36 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
     })
   }, [reviews, search, filterRating, filterYear, filterSector])
 
+  function download(content: string, filename: string, mime: string) {
+    const blob = new Blob([content], { type: mime })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = filename
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  function exportCSV(list: Review[]) {
+    const headers = ["Titre", "Note", "Auteur", "Role", "Secteur", "Date", "Avis"]
+    const rows = list.map((r) =>
+      [
+        `"${r.title}"`, r.rating, `"${r.author}"`, `"${r.role}"`,
+        `"${r.sector}"`, r.date, `"${r.body.replace(/"/g, '""')}"`,
+      ].join(",")
+    )
+    download([headers.join(","), ...rows].join("\n"), "spendesk-reviews.csv", "text/csv")
+  }
+
+  function exportMD(list: Review[]) {
+    const header = "| Titre | Note | Auteur | Role | Secteur | Date | Avis |"
+    const sep = "|---|---|---|---|---|---|---|"
+    const rows = list.map((r) =>
+      `| ${r.title} | ${r.rating}/5 | ${r.author} | ${r.role} | ${r.sector} | ${r.date} | ${r.body.replace(/\n/g, " ")} |`
+    )
+    download([header, sep, ...rows].join("\n"), "spendesk-reviews.md", "text/markdown")
+  }
+
   return (
     <main className="max-w-7xl mx-auto p-4 sm:p-8">
       <header className="mb-8">
@@ -130,9 +160,25 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
           </select>
         </div>
 
-        <p className="text-sm text-gray-400 mb-3">
-          Affichage de {filteredReviews.length} / {analytics.total_reviews} avis
-        </p>
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-sm text-gray-400">
+            Affichage de {filteredReviews.length} / {analytics.total_reviews} avis
+          </p>
+          <div className="flex gap-2">
+            <button
+              onClick={() => exportCSV(filteredReviews)}
+              className="text-xs px-3 py-1.5 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              Exporter CSV
+            </button>
+            <button
+              onClick={() => exportMD(filteredReviews)}
+              className="text-xs px-3 py-1.5 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              Exporter MD
+            </button>
+          </div>
+        </div>
 
         <div className="space-y-3">
           {filteredReviews.map((review) => (
