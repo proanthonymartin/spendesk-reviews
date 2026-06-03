@@ -3,8 +3,6 @@ export default function PainPointsChart({
 }: {
   painPoints: { issue: string; count: number; pct: number }[]
 }) {
-  const maxCount = Math.max(...painPoints.map((p) => p.count), 1)
-
   return (
     <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
       <h3 className="text-sm font-semibold text-gray-700 mb-1">Points faibles récurrents</h3>
@@ -21,7 +19,7 @@ export default function PainPointsChart({
             <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
               <div
                 className="h-full bg-red-400 rounded-full"
-                style={{ width: `${(p.count / maxCount) * 100}%` }}
+                style={{ width: `${p.pct}%` }}
               />
             </div>
           </div>

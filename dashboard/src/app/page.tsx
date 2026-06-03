@@ -4,11 +4,16 @@ import Dashboard from "@/components/Dashboard"
 import type { ReviewsData, PainPoint } from "@/lib/data"
 
 export default function Home() {
-  const reviewsPath = join(process.cwd(), "data", "reviews.json")
-  const raw = readFileSync(reviewsPath, "utf-8")
-  const data: ReviewsData = JSON.parse(raw)
-
+  let reviews: ReviewsData["reviews"] = []
   let painPoints: PainPoint[] = []
+  try {
+    const reviewsPath = join(process.cwd(), "data", "reviews.json")
+    const raw = readFileSync(reviewsPath, "utf-8")
+    reviews = JSON.parse(raw).reviews
+  } catch {
+    console.error("Impossible de charger reviews.json")
+  }
+
   try {
     const llmPath = join(process.cwd(), "data", "pain-points-llm.json")
     const llmRaw = readFileSync(llmPath, "utf-8")
@@ -20,5 +25,5 @@ export default function Home() {
     }
   } catch {}
 
-  return <Dashboard reviews={data.reviews} painPoints={painPoints} />
+  return <Dashboard reviews={reviews} painPoints={painPoints} />
 }

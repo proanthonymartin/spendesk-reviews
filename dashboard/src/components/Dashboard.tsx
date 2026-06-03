@@ -22,8 +22,8 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
   const years = useMemo(() => {
     const set = new Set<string>()
     reviews.forEach((r) => {
-      const y = r.date?.slice(0, 4)
-      if (y) set.add(y)
+      const d = new Date(r.date)
+      if (!isNaN(d.getTime())) set.add(d.getFullYear().toString())
     })
     return Array.from(set).sort().reverse()
   }, [reviews])
@@ -43,7 +43,11 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
             !r.author?.toLowerCase().includes(q)) return false
       }
       if (filterRating && r.rating !== filterRating) return false
-      if (filterYear && r.date?.slice(0, 4) !== filterYear) return false
+      if (filterYear) {
+        const d = new Date(r.date)
+        const year = isNaN(d.getTime()) ? "" : d.getFullYear().toString()
+        if (year !== filterYear) return false
+      }
       if (filterSector && r.sector !== filterSector) return false
       return true
     })
@@ -79,10 +83,6 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
         <SectorChart data={analytics.by_sector} title="Note moyenne par secteur" />
         <PainPointsChart painPoints={analytics.pain_points} />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-        <SectorChart data={analytics.by_company_size} title="Note moyenne par taille d'entreprise" />
       </div>
 
       <section className="mt-8">
@@ -153,7 +153,7 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
                 <span>{review.author}</span>
                 <span>{review.role}</span>
                 <span>{review.sector}</span>
-                <span>{review.company_size} employés</span>
+
                 <span>{review.date}</span>
               </div>
             </div>

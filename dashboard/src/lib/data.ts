@@ -71,7 +71,9 @@ export function computeAnalytics(reviews: Review[], painPointsOverride?: PainPoi
   // Monthly timeline
   const monthlyMap: Record<string, { sum: number; count: number }> = {}
   reviews.forEach((r) => {
-    const month = r.date.slice(0, 7)
+    const d = new Date(r.date)
+    const month = isNaN(d.getTime()) ? "" : d.toISOString().slice(0, 7)
+    if (!month) return
     if (!monthlyMap[month]) monthlyMap[month] = { sum: 0, count: 0 }
     monthlyMap[month].sum += r.rating
     monthlyMap[month].count += 1
