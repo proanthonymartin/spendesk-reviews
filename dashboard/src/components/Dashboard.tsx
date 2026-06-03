@@ -131,7 +131,7 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
         </div>
 
         <p className="text-sm text-gray-400 mb-3">
-          Showing {filteredReviews.length} of {analytics.total_reviews} avis
+          Affichage de {filteredReviews.length} / {analytics.total_reviews} avis
         </p>
 
         <div className="space-y-3">
