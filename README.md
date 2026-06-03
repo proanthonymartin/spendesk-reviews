@@ -2,6 +2,9 @@
 
 Étude de cas pour Skello GTM Outbound : scraper **225 avis Capterra** de Spendesk, construire un dashboard analytics.
 
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-%C3%89tude%20de%20cas-222222?style=flat-square&logo=github)](https://proanthonymartin.github.io/spendesk-reviews)
+[![Vercel](https://img.shields.io/badge/Vercel-Dashboard-000000?style=flat-square&logo=vercel)](https://dashboard-olive-eight-35.vercel.app)
+
 ## Architecture
 
 ```
@@ -105,7 +108,9 @@ npm run dev   # → http://localhost:3000
 
 ## Déploiement
 
-**Vercel** : [dashboard-olive-eight-35.vercel.app](https://dashboard-olive-eight-35.vercel.app)
+**Vercel** (dashboard) : [dashboard-olive-eight-35.vercel.app](https://dashboard-olive-eight-35.vercel.app)
+
+**GitHub Pages** (étude de cas) : [proanthonymartin.github.io/spendesk-reviews](https://proanthonymartin.github.io/spendesk-reviews)
 
 ## Prochaines étapes
 

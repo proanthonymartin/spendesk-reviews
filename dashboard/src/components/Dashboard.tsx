@@ -55,6 +55,13 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Analytics des avis Spendesk</h1>
         <p className="text-gray-500 mt-1">
           Analyse de {analytics.total_reviews} avis Capterra
+          <a
+            href="https://proanthonymartin.github.io/spendesk-reviews"
+            target="_blank"
+            className="ml-3 text-sm text-blue-600 hover:text-blue-800 underline"
+          >
+            Étude de cas ↗
+          </a>
         </p>
       </header>
 
