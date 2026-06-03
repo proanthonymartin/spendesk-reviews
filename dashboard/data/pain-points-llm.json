@@ -1,0 +1,95 @@
+{
+  "source": "manual-analysis",
+  "analyzed_at": "2026-06-03",
+  "total_reviews": 225,
+  "categories": [
+    {
+      "issue": "Paiements refusés / carte bloquée",
+      "count": 28,
+      "pct": 12,
+      "examples": [
+        "We have had experience were credit card get blocked quite alot",
+        "Parfois les paiements carte sont refusés par certains TPE en France",
+        "Carte Spendesk ne passe pas dans tous les péages",
+        "Some major vendors did not accept Spendesk cards as payment",
+        "Spendesk card doesn't work in many places (Trader Joe's for example)"
+      ]
+    },
+    {
+      "issue": "Fonctionnalités manquantes",
+      "count": 25,
+      "pct": 11,
+      "examples": [
+        "I wish the OCR feature would automatically fill them for me",
+        "not enough visibility with spending per category / missing analytics dashboard",
+        "Would be great to have all reimbursement records in one place",
+        "Pas de possibilité de faire des virements directement depuis Spendesk"
+      ]
+    },
+    {
+      "issue": "Intégration comptable",
+      "count": 18,
+      "pct": 8,
+      "examples": [
+        "compliqué à intégrer avec notre ERP pour la partie comptabilité",
+        "Déception sur l'intégration comptable avec Sage 100",
+        "Les extractions des écritures comptables ne permettent pas encore une intégration automatique",
+        "I wish I had known before that I could connect Spendesk with my accounting software"
+      ]
+    },
+    {
+      "issue": "Application mobile / bugs techniques",
+      "count": 12,
+      "pct": 5,
+      "examples": [
+        "Seems to have different functionality on app and on the web app which can be confusing",
+        "Quelques fois l'application mobile plante après la prise en photo de la facture",
+        "Sometimes the app takes a bit to load the images",
+        "The mobile app also does not support multi-receipt upload",
+        "Pas essayé la version mobile car toujours sur ordinateur"
+      ]
+    },
+    {
+      "issue": "Support client / réactivité",
+      "count": 10,
+      "pct": 4,
+      "examples": [
+        "Customer service was slow to respond and often unhelpful",
+        "le manque de réactivité et de solutions apportées par le service clients",
+        "Le support client est peut être un peu moins rapide que le reste"
+      ]
+    },
+    {
+      "issue": "Prix / coût",
+      "count": 10,
+      "pct": 4,
+      "examples": [
+        "The tool feature are responsive but it's pricey",
+        "Le coût est assez élevé pour une utilisation limitée",
+        "On est très déçus d'être poussés à changer de plan : vous augmentez les prix",
+        "Could be cheaper"
+      ]
+    },
+    {
+      "issue": "UI / ergonomie",
+      "count": 9,
+      "pct": 4,
+      "examples": [
+        "Maybe some esthetic on the app. It might be the application's aesthetics",
+        "The UI could be a bit better. It feels a bit empty in some parts",
+        "Manque d'intuitivité sur les comptes de charges, et sur la gestion des notes de frais",
+        "Maybe the UI with soft colors is not easy enough to understand for blind colors people"
+      ]
+    },
+    {
+      "issue": "Processus d'approbation / workflow",
+      "count": 8,
+      "pct": 4,
+      "examples": [
+        "Approval across multiple entities is very elementary. Workflow is rigid",
+        "There are too many approvals needed for every single operation",
+        "I would have to get the amount approved by the approvers which could be a disadvantage"
+      ]
+    }
+  ]
+}

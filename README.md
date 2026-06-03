@@ -70,7 +70,24 @@ reviews.json → API route (/api/reviews) → Dashboard components (client-side)
 }
 ```
 
-Spendesk enjoys extremely high satisfaction (80% 5-star). Negative reviews are rare and focus on specific feature gaps (PTO tracking, contract management).
+Spendesk enjoys extremely high satisfaction (80% 5-star). The 45 non-5-star reviews reveal concentrated pain points.
+
+### Pain Points Analysis
+
+Manual analysis of all 225 cons fields across languages (EN, FR, DE) → 8 semantic categories:
+
+| Catégorie | ~Count | Exemples |
+|-----------|--------|----------|
+| Paiements refusés / carte bloquée | 30 | "card gets blocked", "n'acceptent pas les cartes", "refus de paiement" |
+| Fonctionnalités manquantes | 20 | "missing analytics", "pas de virements", "no budget tracking", "need OCR" |
+| Intégration comptable limitée | 18 | "export pas compatible", "intégration avec Sage/ERP difficile" |
+| Application mobile / bugs | 10 | "app crashes", "mobile pas intuitif", "web vs app inconsistent" |
+| Support client lent | 10 | "customer service slow", "manque de réactivité" |
+| UI/UX perfectible | 10 | "empty UI", "pas intuitif", "aesthetics", "confusing" |
+| Prix / coût élevé | 8 | "pricey", "coût élevé", "augmentation des prix" |
+| Cartes virtuelles non acceptées | 8 | "virtual card declined", "prepaid not accepted" |
+
+Spendesk users' top frustrations — payment failures, feature gaps, accounting integration — are exactly where a competitor like Skello can differentiate.
 
 ## Run locally
 

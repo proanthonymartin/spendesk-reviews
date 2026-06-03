@@ -8,6 +8,8 @@ export interface Review {
   role: string
   company_size: string
   sector: string
+  cons: string
+  pros: string
   recommended: boolean
 }
 
@@ -34,6 +36,12 @@ export interface SectorStats {
   count: number
 }
 
+export interface PainPoint {
+  issue: string
+  count: number
+  pct: number
+}
+
 export interface Analytics {
   total_reviews: number
   avg_rating: number
@@ -42,9 +50,10 @@ export interface Analytics {
   monthly_timeline: MonthlyStats[]
   by_sector: SectorStats[]
   by_company_size: SectorStats[]
+  pain_points: PainPoint[]
 }
 
-export function computeAnalytics(reviews: Review[]): Analytics {
+export function computeAnalytics(reviews: Review[], painPointsOverride?: PainPoint[]): Analytics {
   const total = reviews.length
   const avgRating = reviews.reduce((s, r) => s + r.rating, 0) / total
   const recommended = reviews.filter((r) => r.recommended).length
@@ -105,6 +114,11 @@ export function computeAnalytics(reviews: Review[]): Analytics {
     }))
     .sort((a, b) => b.count - a.count)
 
+  // Pain points — use override from LLM analysis if provided, else keyword matching
+  const painPoints: PainPoint[] = painPointsOverride && painPointsOverride.length > 0
+    ? painPointsOverride
+    : computeKeywordPainPoints(reviews, total)
+
   return {
     total_reviews: total,
     avg_rating: Math.round(avgRating * 100) / 100,
@@ -113,5 +127,29 @@ export function computeAnalytics(reviews: Review[]): Analytics {
     monthly_timeline: monthlyTimeline,
     by_sector: bySector,
     by_company_size: byCompanySize,
+    pain_points: painPoints,
   }
+}
+
+function computeKeywordPainPoints(reviews: Review[], total: number): PainPoint[] {
+  const keywords = [
+    "support", "customer service", "slow", "sync", "integration",
+    "card", "payment", "limit", "mobile", "app",
+    "export", "accounting", "receipt", "bug", "glitch",
+    "price", "cost", "expensive", "feature", "missing",
+    "contract", "holiday", "leave", "pto", "hr"
+  ]
+  const consTexts = reviews.map((r) => (r.cons || "").toLowerCase())
+  return keywords
+    .map((kw) => {
+      const escaped = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      const regex = kw.includes(' ')
+        ? new RegExp(escaped)
+        : new RegExp(`\\b${escaped}s?\\b`)
+      const count = consTexts.filter((t) => regex.test(t)).length
+      return { issue: kw, count, pct: Math.round((count / total) * 100) }
+    })
+    .filter((p) => p.count > 0)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 8)
 }
