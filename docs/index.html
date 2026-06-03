@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spendesk Reviews — Étude de cas</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    line-height: 1.6; color: #1a1a2e; background: #f8f9fa; padding: 2rem 1rem;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 3rem; }
+  h1 { font-size: 2rem; color: #0f0f23; }
+  .subtitle { color: #6b7280; margin-top: 0.5rem; font-size: 1.1rem; }
+  .btn {
+    display: inline-block; margin-top: 1rem; padding: 0.7rem 1.5rem;
+    background: #2563eb; color: #fff; text-decoration: none; border-radius: 8px;
+    font-weight: 600; font-size: 0.95rem;
+  }
+  .btn:hover { background: #1d4ed8; }
+  .links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .section { background: #fff; border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  h2 { font-size: 1.3rem; margin-bottom: 1rem; color: #0f0f23; }
+  h3 { font-size: 1.05rem; margin: 1.2rem 0 0.5rem; color: #374151; }
+  p, li { color: #4b5563; }
+  ul, ol { padding-left: 1.3rem; margin: 0.5rem 0; }
+  li { margin-bottom: 0.3rem; }
+  code { background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.9rem; color: #1e293b; }
+  pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.85rem; margin: 0.5rem 0; }
+  table { width: 100%; border-collapse: collapse; margin: 0.8rem 0; font-size: 0.9rem; }
+  th, td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid #e5e7eb; }
+  th { background: #f8fafc; font-weight: 600; color: #374151; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .kpi { background: #f8fafc; border-radius: 10px; padding: 1.2rem; text-align: center; }
+  .kpi .value { font-size: 1.8rem; font-weight: 700; color: #2563eb; }
+  .kpi .label { font-size: 0.85rem; color: #6b7280; margin-top: 0.2rem; }
+  footer { text-align: center; color: #9ca3af; font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #e5e7eb; }
+  @media (max-width: 600px) { body { padding: 1rem; } .section { padding: 1.2rem; } h1 { font-size: 1.5rem; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Spendesk Reviews — Étude de cas</h1>
+  <p class="subtitle">Scraping & analytics de 225 avis Capterra</p>
+  <div class="links">
+    <a class="btn" href="https://dashboard-olive-eight-35.vercel.app" target="_blank">Voir le dashboard</a>
+    <a class="btn" href="https://github.com/proanthonymartin/spendesk-reviews" target="_blank" style="background:#374151">Code source</a>
+  </div>
+</header>
+
+<div class="section">
+  <h2>Contexte</h2>
+  <p>Étude de cas réalisée dans le cadre d'un entretien pour un poste <strong>GTM Outbound</strong> chez <strong>Skello</strong> (SaaS de planification RH pour les CHR). L'objectif : démontrer ma capacité à construire une machine d'intelligence concurrentielle — scraper, analyser et présenter des données exploitables.</p>
+  <p>Choix de la cible : <strong>Spendesk</strong>, concurrent indirect de Skello sur le segment des outils financiers pour PME/ETI.</p>
+</div>
+
+<div class="section">
+  <h2>Défi technique</h2>
+  <p>Capterra protège ses pages de reviews avec <strong>Cloudflare</strong>. Les approches classiques (Playwright headless, puppeteer-extra, requests) sont toutes bloquées — réponse 403 ou challenge JS non résolu.</p>
+  <h3>Solution : Chrome CDP</h3>
+  <p>Connexion à une instance Chrome réelle via <strong>Chrome DevTools Protocol</strong> (<code>--remote-debugging-port=9222</code>). Le navigateur étant un vrai Chrome lancé manuellement, Cloudflare lui fait entièrement confiance — plus de blocage.</p>
+  <pre>chrome.exe --remote-debugging-port=9222
+python live_scraper.py  # Playwright → CDP → navigateur de confiance</pre>
+</div>
+
+<div class="section">
+  <h2>Pipeline</h2>
+  <ol>
+    <li>Navigation pages 1–10 de <code>capterra.com/p/157515/Spendesk/reviews/</code></li>
+    <li>Extraction : note, titre, date, auteur, rôle, secteur, avis/contre, corps</li>
+    <li>Déduplication par (titre, auteur, date) → <strong>225 avis uniques</strong></li>
+    <li>Export en JSON → alimente le dashboard</li>
+  </ol>
+</div>
+
+<div class="section">
+  <h2>Résultats</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="value">225</div><div class="label">Avis scrapés</div></div>
+    <div class="kpi"><div class="value">4.72</div><div class="label">Note moyenne</div></div>
+    <div class="kpi"><div class="value">80%</div><div class="label">5 étoiles</div></div>
+    <div class="kpi"><div class="value">10</div><div class="label">Pages parcourues</div></div>
+  </div>
+
+  <h3>Distribution des notes</h3>
+  <table>
+    <tr><th>Note</th><th>Nombre</th><th>%</th></tr>
+    <tr><td>5★</td><td>180</td><td>80%</td></tr>
+    <tr><td>4★</td><td>38</td><td>16.9%</td></tr>
+    <tr><td>3★</td><td>4</td><td>1.8%</td></tr>
+    <tr><td>2★</td><td>1</td><td>0.4%</td></tr>
+    <tr><td>1★</td><td>2</td><td>0.9%</td></tr>
+  </table>
+
+  <h3>Analyse des points faibles</h3>
+  <p>Analyse manuelle des 225 champs "cons" (EN, FR, DE) → 8 catégories sémantiques :</p>
+  <table>
+    <tr><th>Catégorie</th><th>~Count</th><th>Exemples</th></tr>
+    <tr><td>Paiements refusés / carte bloquée</td><td>30</td><td>"card gets blocked", "n'acceptent pas les cartes"</td></tr>
+    <tr><td>Fonctionnalités manquantes</td><td>20</td><td>"missing analytics", "pas de virements"</td></tr>
+    <tr><td>Intégration comptable limitée</td><td>18</td><td>"export pas compatible", "intégration Sage/ERP difficile"</td></tr>
+    <tr><td>Application mobile / bugs</td><td>10</td><td>"app crashes", "mobile pas intuitif"</td></tr>
+    <tr><td>Support client lent</td><td>10</td><td>"customer service slow"</td></tr>
+    <tr><td>UI/UX perfectible</td><td>10</td><td>"empty UI", "pas intuitif"</td></tr>
+    <tr><td>Prix / coût élevé</td><td>8</td><td>"pricey", "augmentation des prix"</td></tr>
+    <tr><td>Cartes virtuelles non acceptées</td><td>8</td><td>"virtual card declined"</td></tr>
+  </table>
+  <p style="margin-top:0.8rem">Les frustrations principales des utilisateurs Spendesk — échecs de paiement, fonctionnalités manquantes, intégration comptable — sont exactement les angles où un concurrent comme Skello peut se différencier.</p>
+</div>
+
+<div class="section">
+  <h2>Stack technique</h2>
+  <ul>
+    <li><strong>Scraper :</strong> Python + Playwright + Chrome CDP</li>
+    <li><strong>Dashboard :</strong> Next.js 14 (App Router) + Chart.js + Tailwind CSS</li>
+    <li><strong>Déploiement :</strong> Vercel</li>
+    <li><strong>Code :</strong> github.com/proanthonymartin/spendesk-reviews</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Pourquoi ce projet est pertinent pour Skello</h2>
+  <ul>
+    <li><strong>Scraping réel</strong> — contournement de Cloudflare, pipeline de données fonctionnel</li>
+    <li><strong>Analyse concurrentielle</strong> — transformation de données brutes en insights métier</li>
+    <li><strong>Stack outbound</strong> — mêmes compétences (Python, scraping, automatisation) que pour une machine de prospection</li>
+    <li><strong>Delivery</strong> — du concept au déploiement en une session de travail</li>
+  </ul>
+</div>
+
+<footer>
+  <p>Réalisé par Anthony Martin — <a href="https://github.com/proanthonymartin/spendesk-reviews" style="color:#2563eb">github.com/proanthonymartin/spendesk-reviews</a></p>
+  <p style="margin-top:0.3rem">Dashboard live : <a href="https://dashboard-olive-eight-35.vercel.app" style="color:#2563eb">dashboard-olive-eight-35.vercel.app</a></p>
+</footer>
+
+</div>
+</body>
+</html>
