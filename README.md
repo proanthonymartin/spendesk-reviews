@@ -1,66 +1,66 @@
 # Spendesk Reviews — Scraping & Analytics
 
-Case study for Skello GTM Outbound : scrape **225 Capterra reviews** of Spendesk, build analytics dashboard.
+Étude de cas pour Skello GTM Outbound : scraper **225 avis Capterra** de Spendesk, construire un dashboard analytics.
 
 ## Architecture
 
 ```
 spendesk-reviews/
 ├── scraper/
-│   └── live_scraper.py    # Playwright + Chrome CDP → bypass Cloudflare
+│   └── live_scraper.py    # Playwright + Chrome CDP → contourne Cloudflare
 ├── dashboard/             # Next.js 14 + Chart.js + Tailwind
 │   ├── data/
-│   │   └── reviews.json   # 225 reviews (scraped)
+│   │   └── reviews.json   # 225 avis (scrapés)
 │   ├── src/
 │   │   ├── app/
-│   │   │   ├── page.tsx           # Dashboard page
-│   │   │   └── api/reviews/route.ts  # API route → serves reviews.json
+│   │   │   ├── page.tsx           # Page dashboard
+│   │   │   └── api/reviews/route.ts  # Route API → sert reviews.json
 │   │   ├── components/
-│   │   │   └── Dashboard.tsx      # Charts + KPI cards
+│   │   │   └── Dashboard.tsx      # Graphiques + KPIs
 │   │   └── lib/
-│   │       └── data.ts            # Types + metrics computation
+│   │       └── data.ts            # Types + calculs métriques
 │   └── package.json
 └── README.md
 ```
 
 ## Scraper
 
-**Challenge** : Capterra blocks headless browsers (Cloudflare).
+**Défi** : Capterra bloque les navigateurs headless (Cloudflare).
 
-**Solution** : Connect Playwright to a real Chrome instance via remote debugging (`chrome.exe --remote-debugging-port=9222`). This bypasses Cloudflare entirely — the browser is fully trusted.
+**Solution** : Connecter Playwright à une instance Chrome réelle via remote debugging (`chrome.exe --remote-debugging-port=9222`). Cloudflare fait entièrement confiance au navigateur.
 
 **Pipeline** :
-1. Navigate pages 1–10 of `capterra.com/p/157515/Spendesk/reviews/`
-2. Extract rating, title, date, author, role, sector, pros/cons, body
-3. Deduplicate by (title, author, date) → 225 unique reviews
-4. Save as JSON
+1. Naviguer pages 1–10 de `capterra.com/p/157515/Spendesk/reviews/`
+2. Extraire note, titre, date, auteur, rôle, secteur, avis/contre, corps
+3. Dédupliquer par (titre, auteur, date) → 225 avis uniques
+4. Sauvegarder en JSON
 
 ## Dashboard
 
 - **Framework** : Next.js 14 (App Router)
-- **Charts** : Chart.js via react-chartjs-2
-- **Styling** : Tailwind CSS
+- **Graphiques** : Chart.js via react-chartjs-2
+- **Style** : Tailwind CSS
 
-### Visualizations
+### Visualisations
 
-| View | Description |
-|------|-------------|
-| Rating distribution | Bar chart — 5★: 180, 4★: 38, 3★: 4, 2★: 1, 1★: 2 |
-| Timeline | Reviews per year (2021–2025) |
-| By sector | Breakdown by industry vertical |
-| By company size | Breakdown by employee count |
-| KPI cards | Average rating, total reviews, recommendation score |
-| Review list | All 225 reviews with full text |
+| Vue | Description |
+|-----|-------------|
+| Distribution des notes | Bar chart — 5★: 180, 4★: 38, 3★: 4, 2★: 1, 1★: 2 |
+| Chronologie | Avis par année (2021–2025) |
+| Par secteur | Répartition par verticale métier |
+| Par taille d'entreprise | Répartition par effectif |
+| Cartes KPI | Note moyenne, total avis, taux de recommandation |
+| Liste des avis | Les 225 avis avec texte intégral |
 
-### Data flow
+### Flux de données
 
 ```
-reviews.json → API route (/api/reviews) → Dashboard components (client-side)
+reviews.json → Route API (/api/reviews) → Composants Dashboard (client)
 ```
 
-**Why JSON instead of a database for v1 ?** — The dataset is small (225 reviews) and static. No concurrent writes, no complex queries. JSON + API route is simpler to deploy (zero infrastructure) and fast enough. A PostgreSQL / SQLite migration would be the next step for dynamic data.
+**Pourquoi JSON plutôt qu'une base de données en v1 ?** — Le jeu de données est petit (225 avis) et statique. Pas d'écritures concurrentes, pas de requêtes complexes. JSON + route API est plus simple à déployer (zéro infrastructure) et assez rapide. Une migration PostgreSQL / SQLite serait la prochaine étape pour des données dynamiques.
 
-## Results
+## Résultats
 
 ```json
 {
@@ -70,11 +70,11 @@ reviews.json → API route (/api/reviews) → Dashboard components (client-side)
 }
 ```
 
-Spendesk enjoys extremely high satisfaction (80% 5-star). The 45 non-5-star reviews reveal concentrated pain points.
+Spendesk bénéficie d'une très haute satisfaction (80% de 5★). Les 45 avis non-5★ révèlent des points faibles concentrés.
 
-### Pain Points Analysis
+### Analyse des points faibles
 
-Manual analysis of all 225 cons fields across languages (EN, FR, DE) → 8 semantic categories:
+Analyse manuelle des 225 champs "cons" toutes langues confondues (EN, FR, DE) → 8 catégories sémantiques :
 
 | Catégorie | ~Count | Exemples |
 |-----------|--------|----------|
@@ -87,12 +87,12 @@ Manual analysis of all 225 cons fields across languages (EN, FR, DE) → 8 seman
 | Prix / coût élevé | 8 | "pricey", "coût élevé", "augmentation des prix" |
 | Cartes virtuelles non acceptées | 8 | "virtual card declined", "prepaid not accepted" |
 
-Spendesk users' top frustrations — payment failures, feature gaps, accounting integration — are exactly where a competitor like Skello can differentiate.
+Les frustrations principales des utilisateurs Spendesk — échecs de paiement, fonctionnalités manquantes, intégration comptable — sont exactement là où un concurrent comme Skello peut se différencier.
 
-## Run locally
+## Exécution locale
 
 ```bash
-# Scraper (requires Chrome on port 9222)
+# Scraper (nécessite Chrome sur le port 9222)
 cd scraper
 pip install playwright
 python live_scraper.py
@@ -103,15 +103,15 @@ npm install
 npm run dev   # → http://localhost:3000
 ```
 
-## Deployed
+## Déploiement
 
 **Vercel** : [dashboard-olive-eight-35.vercel.app](https://dashboard-olive-eight-35.vercel.app)
 
-## Next steps
+## Prochaines étapes
 
-- Scheduled scraping (GitHub Actions cron)
-- Competitor comparison (PayFit, Factorial…)
-- Search / filter reviews by keyword, rating, date
-- Word cloud of pros/cons
-- Sentiment analysis
-- PostgreSQL for multi-user / dynamic data
+- Scraping planifié (GitHub Actions cron)
+- Comparaison concurrents (PayFit, Factorial…)
+- Recherche / filtre des avis par mot-clé, note, date
+- Nuage de mots des avis/contre
+- Analyse de sentiment
+- PostgreSQL pour données multi-utilisateurs / dynamiques

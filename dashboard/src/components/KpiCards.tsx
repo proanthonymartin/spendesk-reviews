@@ -9,21 +9,21 @@ export default function KpiCards({
 }) {
   const cards = [
     {
-      label: "Average Rating",
+      label: "Note moyenne",
       value: avgRating.toFixed(1),
       suffix: "/ 5",
       color: "text-yellow-500",
       bg: "bg-yellow-50",
     },
     {
-      label: "Total Reviews",
+      label: "Total avis",
       value: totalReviews.toString(),
       suffix: "",
       color: "text-blue-600",
       bg: "bg-blue-50",
     },
     {
-      label: "Recommendation Rate",
+      label: "Taux de recommandation",
       value: `${recommendationRate}%`,
       suffix: "",
       color: "text-green-600",

@@ -7,9 +7,9 @@ export default function PainPointsChart({
 
   return (
     <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-      <h3 className="text-sm font-semibold text-gray-700 mb-1">Top Pain Points</h3>
+      <h3 className="text-sm font-semibold text-gray-700 mb-1">Points faibles récurrents</h3>
       <p className="text-xs text-gray-400 mb-3">
-        Keywords from "cons" fields &mdash; 80%+ of reviews are in French, negative feedback is often brief
+        Mots-clés extraits des "cons" &mdash; 80%+ des avis sont en français, les retours négatifs sont souvent brefs
       </p>
       <div className="space-y-2">
         {painPoints.map((p) => (

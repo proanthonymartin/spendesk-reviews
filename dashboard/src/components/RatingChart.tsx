@@ -16,10 +16,10 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 export default function RatingChart({ data }: { data: RatingDistribution[] }) {
   const chartData = {
-    labels: data.map((d) => `${d.rating} Star${d.rating > 1 ? "s" : ""}`),
+    labels: data.map((d) => `${d.rating} étoile${d.rating > 1 ? "s" : ""}`),
     datasets: [
       {
-        label: "Reviews",
+        label: "Avis",
         data: data.map((d) => d.count),
         backgroundColor: ["#ef4444", "#f97316", "#eab308", "#22c55e", "#16a34a"],
         borderRadius: 6,
@@ -31,7 +31,7 @@ export default function RatingChart({ data }: { data: RatingDistribution[] }) {
     responsive: true,
     plugins: {
       legend: { display: false },
-      title: { display: true, text: "Rating Distribution", font: { size: 16 } },
+      title: { display: true, text: "Distribution des notes", font: { size: 16 } },
     },
     scales: {
       y: { beginAtZero: true, ticks: { stepSize: 1 } },

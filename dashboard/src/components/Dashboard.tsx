@@ -52,9 +52,9 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
   return (
     <main className="max-w-7xl mx-auto p-4 sm:p-8">
       <header className="mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Spendesk Reviews Analytics</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Analytics des avis Spendesk</h1>
         <p className="text-gray-500 mt-1">
-          Analysis of {analytics.total_reviews} reviews from Capterra
+          Analyse de {analytics.total_reviews} avis Capterra
         </p>
       </header>
 
@@ -70,21 +70,21 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-        <SectorChart data={analytics.by_sector} title="Avg Rating by Sector" />
+        <SectorChart data={analytics.by_sector} title="Note moyenne par secteur" />
         <PainPointsChart painPoints={analytics.pain_points} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-        <SectorChart data={analytics.by_company_size} title="Avg Rating by Company Size" />
+        <SectorChart data={analytics.by_company_size} title="Note moyenne par taille d'entreprise" />
       </div>
 
       <section className="mt-8">
-        <h2 className="text-xl font-semibold mb-4">Reviews</h2>
+        <h2 className="text-xl font-semibold mb-4">Avis</h2>
 
         <div className="flex flex-col sm:flex-row gap-3 mb-4">
           <input
             type="text"
-            placeholder="Search title, author, content..."
+            placeholder="Rechercher par titre, auteur, contenu..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -94,7 +94,7 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
             onChange={(e) => setFilterRating(Number(e.target.value))}
             className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white"
           >
-            <option value={0}>All ratings</option>
+            <option value={0}>Toutes les notes</option>
             <option value={5}>5★</option>
             <option value={4}>4★</option>
             <option value={3}>3★</option>
@@ -106,7 +106,7 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
             onChange={(e) => setFilterYear(e.target.value)}
             className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white"
           >
-            <option value="">All years</option>
+            <option value="">Toutes les années</option>
             {years.map((y) => (
               <option key={y} value={y}>{y}</option>
             ))}
@@ -116,7 +116,7 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
             onChange={(e) => setFilterSector(e.target.value)}
             className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white"
           >
-            <option value="">All sectors</option>
+            <option value="">Tous les secteurs</option>
             {sectors.map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}
@@ -124,7 +124,7 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
         </div>
 
         <p className="text-sm text-gray-400 mb-3">
-          Showing {filteredReviews.length} of {analytics.total_reviews} reviews
+          Showing {filteredReviews.length} of {analytics.total_reviews} avis
         </p>
 
         <div className="space-y-3">
@@ -136,7 +136,7 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
                   <span className="text-yellow-500 font-bold">{review.rating}/5</span>
                   {review.recommended && (
                     <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
-                      Recommended
+                      Recommandé
                     </span>
                   )}
                 </div>
@@ -146,7 +146,7 @@ export default function Dashboard({ reviews, painPoints }: { reviews: Review[], 
                 <span>{review.author}</span>
                 <span>{review.role}</span>
                 <span>{review.sector}</span>
-                <span>{review.company_size} employees</span>
+                <span>{review.company_size} employés</span>
                 <span>{review.date}</span>
               </div>
             </div>

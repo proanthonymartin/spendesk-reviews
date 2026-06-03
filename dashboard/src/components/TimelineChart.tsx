@@ -21,7 +21,7 @@ export default function TimelineChart({ data }: { data: MonthlyStats[] }) {
     labels: data.map((d) => d.month),
     datasets: [
       {
-        label: "Avg Rating",
+        label: "Note moyenne",
         data: data.map((d) => d.avg_rating),
         borderColor: "#3b82f6",
         backgroundColor: "rgba(59, 130, 246, 0.1)",
@@ -37,7 +37,7 @@ export default function TimelineChart({ data }: { data: MonthlyStats[] }) {
     responsive: true,
     plugins: {
       legend: { display: false },
-      title: { display: true, text: "Rating Evolution Over Time", font: { size: 16 } },
+      title: { display: true, text: "Évolution des notes dans le temps", font: { size: 16 } },
     },
     scales: {
       y: { min: 1, max: 5, ticks: { stepSize: 1 } },
